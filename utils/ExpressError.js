@@ -1,5 +1,9 @@
-module.exports = (fn) => {
-    return (req, res, next) => {
-        fn(req, res, next).catch(next);
+class ExpressError extends Error {
+    constructor(statusCode, message) {
+        super();
+        this.statusCode = statusCode;
+        this.message = message;
     }
 }
+
+module.exports = ExpressError;

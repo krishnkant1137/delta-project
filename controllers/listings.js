@@ -6,12 +6,12 @@ const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
     const allListing = await Listing.find({});
-    res.render("listing/index.ejs", { allListing });
+    res.render("./listings/index.ejs", { allListing });
 }
 
 module.exports.renderNewForm = async (req, res) => {
 
-    res.render("listing/new.ejs");
+    res.render("./listings/new.ejs");
 }
 
 module.exports.showListing = async (req, res) => {
@@ -24,7 +24,7 @@ module.exports.showListing = async (req, res) => {
         res.redirect(`/listings`);
     }
     console.log(listing.geometry.coordinates);
-    res.render("listing/show.ejs", { listing });
+    res.render("./listings/show.ejs", { listing });
 }
 
 module.exports.createListing = async (req, res) => {

@@ -24,7 +24,7 @@ module.exports.showListing = async (req, res) => {
         res.redirect(`/listings`);
     }
     console.log(listing.geometry.coordinates);
-    res.render("./listing/show.ejs", { listing });
+    res.render("listing/show.ejs", { listing });
 }
 
 module.exports.createListing = async (req, res) => {

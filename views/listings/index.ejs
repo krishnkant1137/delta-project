@@ -4,128 +4,105 @@
             <button type="submit">Create new Listing</button>
         </form> -->
 
-    <style>
-        #filters {
-            display: flex;
-            justify-content: space-evenly;
+   <style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;  
+}
 
-            align-items: center;
-        }
+.filter {
+  text-align: center;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  opacity: 0.7;
+}
 
-        .filter {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 0.2rem;
-            align-items: center;
-            margin: 1rem;
-            opacity: 0.7;
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
 
-        }
+.filter p {
+  font-size: 0.8rem;
+}
 
-        .filter:hover {
-            opacity: 1;
-            cursor: pointer;
-        }
+.tax-info {
+  display: none;
+}
 
-        .filter p {
-            font-size: 0.8rem;
-            margin: 0;
-        }
+.tax-toggle {
+  border: 1px solid black;
+  border-radius: 1rem;
+  height: 3.25rem;
+  padding: 1rem;
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+}
+</style>
 
-        .tax-info {
-            display: none;
-        }
+  <div id="filters">
 
-        .tax-toggle {
-            border: 1px solid black;
-            border-radius: 1rem;
-            height: 2.5rem;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            margin-left: 5rem;
-        }
-
-        .filter-swiper {
-            display: flex;
-            width: 70%;
-        }
-
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-            font-size: 10px !important;
-        }
-
-        .swiper-pagination {
-            display: none;
-        }
-    </style>
-
-    <div id="filters">
-        <div #swiperRef="" class="filter-swiper swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-fire "></i></div>
-                    <p>Trending</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-bed "></i></div>
-                    <p>Rooms</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-mountain-city "></i></div>
-                    <p>Iconic cities</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-mountain "></i></div>
-                    <p>Mountain</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class='bx bxs-castle '></i></div>
-                    <p>Castles</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-person-swimming"></i></div>
-                    <p>Pools</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-campground "></i></div>
-                    <p>Camping</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-cow "></i></div>
-                    <p>Farms</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-regular fa-snowflake"></i></div>
-                    <p>Arctic</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-igloo "></i></div>
-                    <p>Domes</p>
-                </div>
-                <div class="filter swiper-slide">
-                    <div class="icon"><i class="fa-solid fa-ship"></i></div>
-                    <p>Boats</p>
-                </div>
-            </div>
-            <!-- <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div> -->
-            <div class="swiper-pagination"></div>
-
-        </div>
-
-
-        <div class="tax-toggle">
-            <div class="form-check-reverse form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
-            </div>
-        </div>
-
+    <div class="filter">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
     </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-person-booth"></i></div>
+      <p>Rooms</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain-city"></i></div>
+      <p>Iconic Cities</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Mountain</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <p>Castles</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Amezing pools</p>
+    </div>
+ 
+    <div class="filter">
+      <div><i class="fa-solid fa-tents"></i></div>
+      <p>Camping</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-tractor"></i></div>
+      <p>Farms</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-regular fa-snowflake"></i></div>
+      <p>Arctic</p>
+    </div>
+
+  <div class="tax-toggle">
+    <div class="form-check-reverse form-switch">
+      <input 
+      class="form-check-input" 
+      type="checkbox" 
+      role="switch" 
+      id="flexSwitchCheckDefault"
+      >
+      <label class="form-check-label" for="flexSwitchCheckDefault">display total after taxes</label>
+    </div>
+  </div>
+  
+</div>
+
 
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
 

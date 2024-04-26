@@ -110,10 +110,10 @@ app.all("*", (req, res, next) => {
 //Error handling 
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = err;
-    res.status(statusCode).render("./error.ejs", { err })
+    res.status(statusCode).render("error.ejs", { err })
     // res.status(statusCode).send(message);
 })
 
 app.listen(port, () => {
-    console.log('listening on port 8080');
+    console.log('listening on port 1137');
 })

@@ -15,6 +15,8 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user.js')
+const port = 1137;
+
 
 
 const listingsRouter = require('./routes/listing.js');
@@ -112,6 +114,6 @@ app.use((err, req, res, next) => {
     // res.status(statusCode).send(message);
 })
 
-app.listen(1137, () => {
+app.listen(port, () => {
     console.log('listening on port 8080');
 })

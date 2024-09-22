@@ -1,3 +1,3 @@
 Complete MERN stack project
 
-WebSite demo link: https://project-mejor.onrender.com
+Website demo link: https://project-mejor.onrender.com

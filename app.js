@@ -96,7 +96,7 @@ app.use((req, res, next) => {
 //Restructuring all routes
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
-app.use("/", listingsRouter);
+app.use("/", userRouter);
 
 
 // app.get('/', (req, res) => {

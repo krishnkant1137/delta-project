@@ -37,6 +37,7 @@ async function main() {
 
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, 'views'))
+// Debug Session and User Data
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
@@ -48,30 +49,29 @@ app.engine('ejs', ejsMate);
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
-        secret: process.env.SECRET,
+        secret: process.env.SECRET || "mybackupsecret",
     },
-    touchAfter: 24 * 60 * 60, // See below for details
+    touchAfter: 24 * 60 * 60, // Update session every 24 hours
 });
 
-store.on("error", () => {
-    console.log("Error in MongoSession store");
-})
+store.on("error", (err) => {
+    console.log("Error in MongoSession store:", err);
+});
 
 const sessionOptions = {
     store,
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || "mybackupsecret",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, // Fix session undefined issue
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true, //cross scripting attacks
+        httpOnly: true,
     }
 };
 
-
-
 app.use(session(sessionOptions));
+
 app.use(flash());
 
 //For passport setup
@@ -84,7 +84,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+app.use((req, res, next) => {
+    console.log("SESSION:", req.session);
+    console.log("CURRENT USER:", req.user);
+    next();
+});
 //Middleware for flash
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
@@ -118,3 +122,5 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
 })
+
+

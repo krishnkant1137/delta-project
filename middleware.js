@@ -8,9 +8,15 @@ const { reviewSchema } = require('./schema.js');
 module.exports.isLoggedIn = (req, res, next) => {
     //passport has inbuild function will authenticate user if they are logged in or not. req.user variable will have all info about user
     // console.log(req.user);
+    console.log("Checking if user is logged in...");
+    console.log("Session Data:", req.session);
+    console.log("Current User:", req.user);
+    console.log("Checking Auth Header:", req.headers.authorization);
     if (!req.isAuthenticated()) {
         //redirect url save
-        req.session.redirectUrl = req.originalUrl;
+        console.log("🚨 User not authenticated! Redirecting to login...");
+
+        // req.session.redirectUrl = req.originalUrl;
 
         req.flash('error', 'You must be logged in to create new listigs');
         return res.redirect('/login');

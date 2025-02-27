@@ -54,10 +54,11 @@ module.exports.createListing = async (req, res) => {
 
         const newListing = new Listing({
             ...req.body.listing,
-            image: { url, filename }, // ✅ Ensure this is stored
+            image: req.file ? { url: req.file.path, filename: req.file.filename } : { url: "/images/default.jpg", filename: "default" },
             owner: req.user._id,
             geometry: geometryData
         });
+        
 
         await newListing.save();
         req.flash('success', "New Listing Created!!");

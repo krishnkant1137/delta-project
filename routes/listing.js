@@ -10,25 +10,6 @@ const { storage } = require('../cloudConfig.js');
 const upload = multer({ storage });
 const Listing = require('../models/listing.js');
 
-router.post("/", isLoggedIn, upload.single("listing[image]"), validateListing, wrapAsync(async (req, res) => {
-    console.log("🔹 New Listing Request Received:", req.body);
-    console.log("🔹 Uploaded File:", req.file);
-    console.log("🔹 User Logged In:", req.user);
-
-    if (!req.body.listing) {
-        console.log("🚨 Error: No listing data found in request body!");
-        req.flash("error", "Invalid listing data.");
-        return res.redirect("/listings/new");
-    }
-
-    const newListing = new Listing(req.body.listing);
-    newListing.owner = req.user._id;
-
-    await newListing.save();
-    req.flash('success', "New Listing Created!!");
-    res.redirect('/listings');
-}));
-
 // all listings
 router.route("/")
     .get(wrapAsync(listingController.index))  // ✅ Only use the controller function

@@ -3,7 +3,6 @@ const Listing = require('../models/listing.js');
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
-// console.log("Mapbox Token:", process.env.MAP_TOKEN);
 
 
 module.exports.index = async (req, res) => {
@@ -29,14 +28,11 @@ module.exports.showListing = async (req, res) => {
         req.flash('error', "Listing you are requested for does not exist!!");
         res.redirect(`/listings`);
     }
-    console.log("📍 Listing Geometry:", listing.geometry); // Debugging
     res.render("./listings/show.ejs", { listing });
 };
 
 module.exports.createListing = async (req, res) => {
-    try {
-        console.log("🔹 Mapbox Geocoding Request for:", req.body.listing.location);
-        
+    try {        
         let response = await geocodingClient
             .forwardGeocode({
                 query: req.body.listing.location,
@@ -44,18 +40,23 @@ module.exports.createListing = async (req, res) => {
             })
             .send();
 
-        console.log("🔹 Mapbox Response:", response.body);
-
         let geometryData = response.body.features.length > 0 ? response.body.features[0].geometry : { type: "Point", coordinates: [0, 0] };
 
-        let url = req.file ? req.file.path : "/images/default.jpg";
-        let filename = req.file ? req.file.filename : "default";
+        console.log("🔹 Uploaded File:", req.file); // Debugging
+
+        if (!req.file) {
+            req.flash("error", "Image upload failed. Please try again.");
+            return res.redirect("/listings/new");
+        }
+
+        let url = req.file.path;
+        let filename = req.file.filename;
 
         const newListing = new Listing({
             ...req.body.listing,
-            image: { url, filename },
+            image: { url, filename }, // ✅ Ensure this is stored
             owner: req.user._id,
-            geometry: geometryData // ✅ Ensure geometry is always set
+            geometry: geometryData
         });
 
         await newListing.save();

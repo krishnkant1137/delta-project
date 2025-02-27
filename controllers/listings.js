@@ -29,7 +29,7 @@ module.exports.showListing = async (req, res) => {
         req.flash('error', "Listing you are requested for does not exist!!");
         res.redirect(`/listings`);
     }
-    console.log(listing.geometry.coordinates);
+    console.log("📍 Listing Geometry:", listing.geometry); // Debugging
     res.render("./listings/show.ejs", { listing });
 };
 

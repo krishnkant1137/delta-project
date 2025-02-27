@@ -3,41 +3,24 @@ const Schema = mongoose.Schema;
 const Review = require('./review.js');
 
 const listingSchema = new Schema({
-    title: {
-        type: 'string',
-        required: true
-    },
+    title: { type: 'string', required: true },
     description: String,
-    image: {
-        url: String,
-        filename: String
-    },
+    image: {url: String, filename: String },
     price: Number,
     location: String,
     country: String,
-    reviews: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Review",
-        }
-    ],
-    owner: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-    },
-    latitude: Number,  // New Field
-  longitude: Number, // New Field
-    geometry: {
-        type: {
-            type: String, // Don't do `{ location: { type: String } }`
-            enum: ['Point'], // 'location.type' must be 'Point'
-           
+    reviews: [{type: Schema.Types.ObjectId, ref: "Review"}],
+    owner: { type: Schema.Types.ObjectId, ref: "User"},
+    geometry: { 
+        type: { 
+            type: String, 
+            enum: ['Point'],
+            //required: true,
         },
-        coordinates: {
+        coordinates: { 
             type: [Number],
-            
-        }
-    }
+          //  required: true,
+        }}
 });
 
 //Post Middleware which will executed after execution of findOneAndDelete

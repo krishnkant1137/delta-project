@@ -1,14 +1,15 @@
 mapboxgl.accessToken = mapToken;
 
 const map = new mapboxgl.Map({
-    container: 'map', // container ID
-    center: [77.2090, 28.6139], // starting position [lng, lat]
-    zoom: 9 // starting zoom
+    container: 'map',
+    center: listingGeometry, // ✅ Use listing location
+    style: 'mapbox://styles/mapbox/streets-v11',
+    zoom: 12
 });
+console.log("Listing Coordinates:", listingGeometry);
 
-console.log("working");
-// console.log(listing.geometry.coordinates);
 
-// const marker = new mapboxgl.Marker({ color: 'black', rotation: 45 })
-//     .setLngLat([77.2090, 28.6139])
-//     .addTo(map);
+new mapboxgl.Marker()
+    .setLngLat(listingGeometry) // ✅ Correct variable name
+    .addTo(map);
+

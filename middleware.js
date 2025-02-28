@@ -6,23 +6,13 @@ const { reviewSchema } = require('./schema.js');
 
 //Middleware to check if user is logged in or not 
 module.exports.isLoggedIn = (req, res, next) => {
-    //passport has inbuild function will authenticate user if they are logged in or not. req.user variable will have all info about user
-    // console.log(req.user);
-    // console.log("Checking if user is logged in...");
-    // console.log("Session Data:", req.session);
-    // console.log("Current User:", req.user);
-    console.log("Checking Auth Header:", req.headers.authorization);
     if (!req.isAuthenticated()) {
-        //redirect url save
-        console.log("🚨 User not authenticated! Redirecting to login...");
-
-        // req.session.redirectUrl = req.originalUrl;
-
-        req.flash('error', 'You must be logged in to create new listigs');
+        req.flash('error', 'You need to log in first!');
         return res.redirect('/login');
     }
     next();
-}
+};
+
 
 module.exports.isOwner = async (req, res, next) => {
     //authorization step
@@ -78,3 +68,11 @@ module.exports.validateListing = (req, res, next) => {
         next();
     }
 }
+
+module.exports.isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.flash('error', 'You need to log in first!');
+        return res.redirect('/login');
+    }
+    next();
+};

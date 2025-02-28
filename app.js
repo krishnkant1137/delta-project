@@ -22,6 +22,8 @@ const port = 1137;
 const listingsRouter = require('./routes/listing.js');
 const reviewsRouter = require('./routes/review.js');
 const userRouter = require('./routes/user.js');
+const bookingRouter = require('./routes/bookings.js');
+
 
 // connection with database
 // const MONGO_URL = 'mongodb://127.0.0.1:27017/airbnb'
@@ -73,6 +75,11 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 
 app.use(flash());
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+});
 
 //For passport setup
 //Passport will use implementation of session it should be after session
@@ -102,11 +109,14 @@ app.use((req, res, next) => {
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
+app.use('/bookings', bookingRouter);
+
 
 
 app.get("/", (req, res) => {
     res.redirect("/listings");
 });
+
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page not Found"));

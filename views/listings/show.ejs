@@ -110,6 +110,35 @@
         <div id="map"></div>
     </div>
 
+    <div class="col-8 offset-3 mt-4">
+        <h3>Book This Listing</h3>
+        <% if(currUser) { %>
+            <form action="/bookings/book/<%= listing._id %>" method="POST">
+                <input type="hidden" name="userId" value="<%= currUser._id %>">
+                <div class="mb-3">
+                    <label for="checkIn" class="form-label">Check-In Date</label>
+                    <input type="date" name="checkIn" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="checkOut" class="form-label">Check-Out Date</label>
+                    <input type="date" name="checkOut" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success">Confirm Booking</button>
+            </form>
+            
+        <% } else { %>
+        <p><a href="/login">Login</a> to book this listing.</p>
+        <% } %>
+    </div>
+
+    <div class="booking-status">
+        <% if (userBooking) { %>
+            <p class="alert alert-success">You are booked from <%= userBooking.checkIn.toDateString() %> to <%= userBooking.checkOut.toDateString() %>.</p>
+        <% } %>
+    </div>
+    
+    
+
     </div>
 
 

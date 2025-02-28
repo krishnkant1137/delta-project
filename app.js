@@ -74,12 +74,7 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 
-app.use(flash());
-app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
-});
+
 
 //For passport setup
 //Passport will use implementation of session it should be after session
@@ -96,7 +91,7 @@ app.use((req, res, next) => {
     console.log("CURRENT USER:", req.user);
     next();
 });
-//Middleware for flash
+app.use(flash());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -104,6 +99,11 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+    console.log("FLASH SUCCESS:", req.flash("success"));
+    console.log("FLASH ERROR:", req.flash("error"));
+    next();
+});
 
 //Restructuring all routes
 app.use("/listings", listingsRouter);

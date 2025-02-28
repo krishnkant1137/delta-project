@@ -1,5 +1,6 @@
 // controllers/listings.js
 const Listing = require('../models/listing.js');
+const Booking = require('../models/booking');
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
@@ -22,14 +23,31 @@ module.exports.renderNewForm = async (req, res) => {
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id)
-        .populate({ path: "reviews", populate: { path: "author" } }) // Nested populate
+        .populate({ path: "reviews", populate: { path: "author" } }) 
         .populate("owner");
+
     if (!listing) {
-        req.flash('error', "Listing you are requested for does not exist!!");
-        res.redirect(`/listings`);
+        req.flash('error', "Listing you requested does not exist!");
+        return res.redirect(`/listings`);
     }
-    res.render("./listings/show.ejs", { listing });
+
+    // ✅ Check if listing has an owner before accessing username
+    if (!listing.owner) {
+        req.flash('error', "Owner details not found for this listing.");
+        return res.redirect(`/listings`);
+    }
+
+    let userBooking = null;
+    if (req.user) {
+        userBooking = await Booking.findOne({
+            listing: id,
+            user: req.user._id
+        });
+    }
+
+    res.render("./listings/show.ejs", { listing, userBooking });
 };
+
 
 module.exports.createListing = async (req, res) => {
     try {        
